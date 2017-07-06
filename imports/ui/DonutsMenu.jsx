@@ -6,14 +6,19 @@ class DonutMenuItem extends Component {
   
   addItem(event){
     event.preventDefault();
-    dbDonuts.insert({name: this.props.menu_item.name})
+    
+    if (obj = dbDonuts.findOne({ name: this.props.menu_item.name })){
+      dbDonuts.update({"_id": obj._id}, {'$inc': {count: 1}})
+    }
+    else
+      dbDonuts.insert({ name: this.props.menu_item.name, price: this.props.menu_item.price, count: 0})   
   }
 
   render() {
     return (
       <li key={this.props.menu_item._id}>
-        <span>{this.props.menu_item.name}</span>
-        <a className="add_donut" href="#" onClick={this.addItem.bind(this)}>Add</a>
+        <span>{this.props.menu_item.name} ({this.props.menu_item.price})</span>
+        <a className="add_donut" href="#" onClick={this.addItem.bind(this)}> Add </a>
       </li>
     )
   }
@@ -24,7 +29,7 @@ class DonutsMenu extends Component {
   render() {
     return (<ul>
       {this.props.donuts_menu.map(function(menu_item){
-        return <DonutMenuItem menu_item={menu_item} />
+        return <DonutMenuItem key={menu_item._id} menu_item={menu_item} />
       })}
     </ul>)
   }

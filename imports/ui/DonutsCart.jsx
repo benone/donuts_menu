@@ -14,7 +14,7 @@ class Donut extends Component {
   render(){
     return (
       <li key={this.props.donut._id}>
-        <span>{this.props.donut.name}</span>
+        <span>{this.props.donut.name} ({this.props.donut.count})</span>
         <a className="remove_donut" href="#" onClick={this.removeItem.bind(this)}>X</a>
       </li>
     )
@@ -27,7 +27,7 @@ class DonutsCart extends Component {
     return(
       <ul>
         {this.props.donuts.map(function(donut){
-          return <Donut donut={donut}/>
+          return <Donut key={donut._id} donut={donut}/>
         })
         }
       </ul>
