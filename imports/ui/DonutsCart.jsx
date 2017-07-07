@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { dbDonuts } from '/imports/api/donuts.js';
 
+import PropTypes from 'prop-types';
+
 import { createContainer } from 'meteor/react-meteor-data';
 
 
@@ -21,6 +23,7 @@ class Donut extends Component {
   }
 }
 
+
 class DonutsCart extends Component {
   
   render(){
@@ -35,6 +38,11 @@ class DonutsCart extends Component {
   }
 }
 
+DonutsCart.propTypes = {
+  donuts: PropTypes.array.isRequired
+}
+
 export default DonutsMenuContainer = createContainer(() => {
+  console.log(dbDonuts.find({}).fetch())
   return { donuts: dbDonuts.find({}).fetch() };
 }, DonutsCart)
